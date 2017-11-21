@@ -1,0 +1,43 @@
+{
+  "name": "node-starter",
+  "version": "1.0.0",
+  "description": "node starter",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --watch app app/index.js",
+    "doc": "apidoc -i app/ -o doc",
+    "lint": "eslint app",
+    "ci": "npm run lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FortechRomania/node-starter.git"
+  },
+  "keywords": [
+    "node",
+    "starter"
+  ],
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://github.com/FortechRomania/node-starter#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "express-jwt": "^5.1.0",
+    "jsonwebtoken": "^7.1.9",
+    "mongodb": "^2.2.10",
+    "mongoose": "^4.6.1",
+    "save": "^2.3.0",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.2",
+    "bcrypt": "^1.0.3",
+    "eslint": "^4.11.0",
+    "eslint-config-fortech": "^2.0.1",
+    "eslint-plugin-import": "^2.8.0",
+    "uid": "0.0.2",
+    "eslint-config-airbnb-base": "^12.0.2"
+  }
+}

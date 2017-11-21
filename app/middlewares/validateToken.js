@@ -6,7 +6,8 @@ module.exports = ( req, res, next ) => {
     const token = req.body.token || req.query.token || req.headers[ "x-access-token" ];
 
     if ( !token ) {
-        return res.unauthorized( );
+        res.unauthorized( );
+        return;
     }
 
     jwt.verify( token, SECRET, ( err, decoded ) => {

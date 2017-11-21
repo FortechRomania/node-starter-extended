@@ -49,11 +49,7 @@ exports.login = ( req, res ) => {
 
 exports.edit = ( req, res ) => {
     const { user } = req;
-    // const { name, sex, age } = req.body;
 
-    // user.name = name;
-    // user.sex = sex;
-    // user.age = age;
     usersRepository.editUser( user, req.body )
         .then( savedUser => res.success( savedUser ) )
         .catch( ( err ) => res.send( err ) );

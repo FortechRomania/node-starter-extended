@@ -52,5 +52,5 @@ The first is called /app and has the following subfolders:
  * models - folder with the models considered
  * middlewares - folder with functions that have access to the request object (req), the response object (res), and the next middleware function in the application’s request-response cycle
  * utilities - folder with functions that can be used in app to avoid repetitive code
-
+ * repository - folder that contains functions that make database operations
 The second folder is called /doc and contains API route documentation generated with apidoc ( see above how to re-generate the index.html )

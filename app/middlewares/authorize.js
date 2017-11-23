@@ -1,6 +1,6 @@
 const usersRepository = require( "../repositories/usersRepository" );
 
-module.exports = ( req, res, next ) => {
+function authorize ( req, res, next ) {
     const { id } = req.body;
     if ( !id ) {
         res.preconditionFailed( "missing_id" );
@@ -11,4 +11,6 @@ module.exports = ( req, res, next ) => {
         req.user = user;
         return next();
     } ).catch( ( err ) => res.send( err ) );
-};
+}
+
+module.exports = authorize;

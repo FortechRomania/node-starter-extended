@@ -71,7 +71,7 @@ router.put( "/users/edit", authorize, validateToken, usersController.edit );
 *           id:123456789
 *       }
 */
-router.delete( "/users/delete", authorize, validateToken, usersController.delete );
+router.delete( "/users/delete", authorize, validateToken, usersController.deleteUser );
 
 router.get( "/test", ( req, res ) => {
     res.json( { success: true } );

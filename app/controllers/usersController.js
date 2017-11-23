@@ -5,7 +5,7 @@ const usersRepository = require( "../repositories/usersRepository" );
 
 const SECRET = "superSuperSecret";
 
-exports.register = ( req, res ) => {
+const register = ( req, res ) => {
     const { user } = req;
     if ( user ) {
         res.preconditionFailed( "existing_user" );
@@ -19,7 +19,7 @@ exports.register = ( req, res ) => {
         .catch( ( err ) => res.send( err ) );
 };
 
-exports.login = ( req, res ) => {
+const login = ( req, res ) => {
     const { user } = req;
 
     if ( !req.body.password ) {
@@ -47,7 +47,7 @@ exports.login = ( req, res ) => {
     } );
 };
 
-exports.edit = ( req, res ) => {
+const edit = ( req, res ) => {
     const { user } = req;
 
     usersRepository.editUser( user, req.body )
@@ -55,10 +55,17 @@ exports.edit = ( req, res ) => {
         .catch( ( err ) => res.send( err ) );
 };
 
-exports.delete = ( req, res ) => {
+const deleteUser = ( req, res ) => {
     const { user } = req;
 
     usersRepository.deleteUser( user )
         .then( savedUser => res.success( savedUser ) )
         .catch( ( err ) => res.send( err ) );
+};
+
+module.exports = {
+    register,
+    login,
+    edit,
+    deleteUser,
 };

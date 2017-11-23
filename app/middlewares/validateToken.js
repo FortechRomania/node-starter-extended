@@ -2,7 +2,7 @@ const jwt = require( "jsonwebtoken" );
 
 const SECRET = "superSuperSecret";
 
-module.exports = ( req, res, next ) => {
+function validateToken ( req, res, next ) {
     const token = req.body.token || req.query.token || req.headers[ "x-access-token" ];
 
     if ( !token ) {
@@ -20,4 +20,6 @@ module.exports = ( req, res, next ) => {
         req.decoded = decoded;
         return next( );
     } );
-};
+}
+
+module.exports = validateToken;

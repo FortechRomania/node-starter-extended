@@ -2,7 +2,7 @@ const mongoose = require( "mongoose" );
 
 const User = mongoose.model( "User" );
 
-exports.findUser = async ( id ) => {
+const findUser = async ( id ) => {
     try {
         const queryResult = await User.findOne( { id } );
         return queryResult;
@@ -11,7 +11,7 @@ exports.findUser = async ( id ) => {
     }
 };
 
-exports.saveUser = async ( data ) => {
+const saveUser = async ( data ) => {
     try {
         const user = new User( data );
         user.setPass( data.password );
@@ -23,7 +23,7 @@ exports.saveUser = async ( data ) => {
     }
 };
 
-exports.editUser = async ( userObject, newData ) => {
+const editUser = async ( userObject, newData ) => {
     const { name, sex, age } = newData;
     const user = userObject;
     try {
@@ -38,11 +38,18 @@ exports.editUser = async ( userObject, newData ) => {
     }
 };
 
-exports.deleteUser = async ( user ) => {
+const deleteUser = async ( user ) => {
     try {
         const queryResult = await user.remove();
         return queryResult;
     } catch ( err ) {
         return err;
     }
+};
+
+module.exports = {
+    findUser,
+    saveUser,
+    editUser,
+    deleteUser,
 };

@@ -1,22 +1,26 @@
-const { extractObject } = require( "../utilities" );
+const extractObject = require( "../utilities/index" );
 const jwt = require( "jsonwebtoken" );
 const bcrypt = require( "bcrypt" );
 const usersRepository = require( "../repositories/usersRepository" );
 
 const SECRET = "superSuperSecret";
 
-const register = ( req, res ) => {
+const register = async ( req, res ) => {
     const { user } = req;
     if ( user ) {
         res.preconditionFailed( "existing_user" );
         return;
     }
-    usersRepository.saveUser( req.body )
-        .then( savedUser => res.success( extractObject(
+    try {
+        const savedUser = await usersRepository.saveUser( req.body );
+
+        res.success( extractObject(
             savedUser,
             [ "id", "username" ],
-        ) ) )
-        .catch( ( err ) => res.send( err ) );
+        ) );
+    } catch ( err ) {
+        res.send( err );
+    }
 };
 
 const login = ( req, res ) => {
@@ -47,20 +51,26 @@ const login = ( req, res ) => {
     } );
 };
 
-const edit = ( req, res ) => {
+const edit = async ( req, res ) => {
     const { user } = req;
 
-    usersRepository.editUser( user, req.body )
-        .then( savedUser => res.success( savedUser ) )
-        .catch( ( err ) => res.send( err ) );
+    try {
+        const editedUser = await usersRepository.editUser( user, req.body );
+        res.success( editedUser );
+    } catch ( err ) {
+        res.send( err );
+    }
 };
 
-const deleteUser = ( req, res ) => {
+const deleteUser = async ( req, res ) => {
     const { user } = req;
 
-    usersRepository.deleteUser( user )
-        .then( savedUser => res.success( savedUser ) )
-        .catch( ( err ) => res.send( err ) );
+    try {
+        const deletedUser = await usersRepository.deleteUser( user );
+        res.success( deletedUser );
+    } catch ( err ) {
+        res.send( err );
+    }
 };
 
 module.exports = {

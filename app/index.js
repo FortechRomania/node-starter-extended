@@ -1,7 +1,7 @@
 const express = require( "express" );
 const bodyParser = require( "body-parser" );
 const logger = require( "./utilities/logger" );
-
+const helmet = require( "helmet" );
 const config = require( "./config" );
 const customResponses = require( "./middlewares/customResponses" );
 
@@ -15,8 +15,15 @@ require( "./models/user" );
 // add all models that are used in the app. Use require as below:
 // require( path to model )
 
+app.use( ( req, res, next ) => {
+    res.header( "Access-Control-Allow-Origin", "*" );
+    res.header( "Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept" );
+    next();
+} );
+
 app.use( bodyParser.json( ) );
 app.use( customResponses );
+app.use( helmet() );
 
 require( "./config/mongoose" )( app );
 require( "./config/routes" )( app );

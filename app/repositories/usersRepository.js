@@ -6,6 +6,7 @@ const findUser = async ( id ) => User.findOne( { id } );
 
 const saveUser = async ( data ) => {
     const user = new User( data );
+
     user.setPass( data.password );
     return user.save( );
 };

@@ -14,7 +14,7 @@ const userSchema = new Schema( {
     timestamps: true,
 } );
 
-userSchema.methods.setPass = function( password ) {
+userSchema.methods.setPass = function( password ) { // eslint-disable-line
     const saltRounds = 10;
     const hash = bcrypt.hashSync( password, saltRounds );
     this.password = hash;

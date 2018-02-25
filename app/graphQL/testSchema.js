@@ -1,10 +1,10 @@
 const {
     GraphQLObjectType,
     GraphQLString,
-    GraphQLInt,
+    // GraphQLInt,
     GraphQLSchema,
-    GraphQLList,
-    GraphQLNonNull,
+    // GraphQLList,
+    // GraphQLNonNull,
 } = require( "graphql" );
 
 const states = [
@@ -31,9 +31,10 @@ const RootQuery = new GraphQLObjectType( {
             args: {
                 id: { type: GraphQLString },
             },
+            // eslint-disable-next-line consistent-return
             resolve( parentValue, args ) {
-                for ( let i = 0; i < states.length; i++ ) {
-                    if ( states[ i ].id == args.id ) {
+                for ( let i = 0; i < states.length; i += 1 ) {
+                    if ( states[ i ].id === args.id ) {
                         return states[ i ];
                     }
                 }

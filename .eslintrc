@@ -1,3 +1,12 @@
 {
-    "extends": "fortech"
+    "extends": "fortech",
+    "env": {
+    "node": true,
+    "mocha": true
+    },
+
+    "rules": {
+    "no-console": 1,
+    "no-underscore-dangle": 0,
+  }
 }

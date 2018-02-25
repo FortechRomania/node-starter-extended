@@ -1,19 +1,17 @@
 const express = require( "express" );
+const expressGraphQL = require( "express-graphql" );
 const bodyParser = require( "body-parser" );
-const logger = require( "./utilities/logger" );
 const helmet = require( "helmet" );
 const config = require( "./config" );
 const customResponses = require( "./middlewares/customResponses" );
+
+const testSchema = require( "./graphQL/testSchema" );
 
 const app = express( );
 const port = process.env.PORT || config.port;
 const ENV = process.env.NODE_ENV || config.env;
 
 app.set( "env", ENV );
-
-require( "./models/user" );
-// add all models that are used in the app. Use require as below:
-// require( path to model )
 
 app.use( ( req, res, next ) => {
     res.header( "Access-Control-Allow-Origin", "*" );
@@ -25,17 +23,16 @@ app.use( bodyParser.json( ) );
 app.use( customResponses );
 app.use( helmet() );
 
-require( "./config/mongoose" )( app );
+app.use( "/graphql", expressGraphQL( {
+    schema: testSchema,
+    graphiql: true,
+} ) );
+
 require( "./config/routes" )( app );
 
-app.use( ( req, res ) => {
-    res.notFound( );
-} );
-
-app.use( ( err, req, res, next ) => {
-    logger.error( err.stack );
-    next( err );
-} );
+// app.use( ( req, res ) => {
+//     res.notFound( );
+// } );
 
 // Don't remove next !!!!
 app.use( ( err, req, res, next ) => { // eslint-disable-line no-unused-vars
@@ -45,4 +42,4 @@ app.use( ( err, req, res, next ) => { // eslint-disable-line no-unused-vars
     } );
 } );
 
-app.listen( port );
+app.listen( port, () => { console.log( `Online at port: ${ port }` ); } );

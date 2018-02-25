@@ -5,10 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --watch app app/index.js",
+    "start": "node app/index.js",
+    "startWithDemon": "nodemon app/index.js",
     "doc": "apidoc -i app/ -o doc",
-    "lint": "eslint app",
-    "ci": "npm run lint"
+    "linter": "eslint app --quiet",
+    "precommit": "npm run linter",
+    "docs": "apidoc -i doc/apidoc/input -o doc/apidoc/output"
   },
   "repository": {
     "type": "git",
@@ -24,10 +26,11 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "express-graphql": "^0.6.12",
     "express-jwt": "^5.1.0",
+    "graphql": "^0.13.1",
     "jsonwebtoken": "^7.1.9",
-    "mongodb": "^2.2.10",
-    "mongoose": "^4.6.1",
+    "neo4j-driver": "^1.5.3",
     "nodemon": "^1.12.1",
     "save": "^2.3.0",
     "winston": "^2.4.0"
@@ -40,6 +43,7 @@
     "eslint-config-fortech": "^2.0.1",
     "eslint-plugin-import": "^2.8.0",
     "helmet": "^3.9.0",
+    "husky": "^0.14.3",
     "uid": "0.0.2"
   }
 }

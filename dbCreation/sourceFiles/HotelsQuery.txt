@@ -1,0 +1,13 @@
+load csv from "https://expirebox.com/files/f729409d97faa20e1fc3cce1d0d020b6.csv" as line FIELDTERMINATOR ','
+
+match (n:State { name:line[0]} )
+create (hilton:Hotels {name:"Hilton", seventies: line[1], eighties: line[6], nineties: line[11], oughts: line[16] })
+create (n)-[rel0:has_Hotel]->(hilton)
+create (seasons:Hotels {name:"Four Seasons", seventies: line[2], eighties: line[7], nineties: line[12], oughts: line[17] })
+create (n)-[rel1:has_Hotel]->(seasons)
+create (inn:Hotels {name:"Holiday Inn", seventies: line[3], eighties: line[8], nineties: line[13], oughts: line[18] })
+create (n)-[rel2:has_Hotel]->(inn)
+create (western:Hotels {name:"Best Western", seventies: line[4], eighties: line[5], nineties: line[14], oughts: line[19] })
+create (n)-[rel3:has_Hotel]->(western)
+
+return western

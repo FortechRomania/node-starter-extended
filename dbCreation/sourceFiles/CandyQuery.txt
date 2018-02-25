@@ -1,0 +1,19 @@
+load csv from "https://expirebox.com/files/e55477e94706d859c70c3b85a1884507.csv" as line FIELDTERMINATOR ','
+
+match (n:State { name:line[0]} )
+create (candy:Candy {name:"Hershey", seventies: line[1], eighties: line[6], nineties: line[11], oughts: line[16] })
+create (n)-[rel:has_Candy]->(candy)
+
+return candy
+
+load csv from "https://expirebox.com/files/e55477e94706d859c70c3b85a1884507.csv" as line FIELDTERMINATOR ','
+
+match (n:State { name:line[0]} )
+create (candyMars:Candy {name:"Mars", seventies: line[2], eighties: line[7], nineties: line[12], oughts: line[17] })
+create (n)-[rel1:has_Candy]->(candyMars)
+create (candyLindt:Candy {name:"Lindt", seventies: line[3], eighties: line[8], nineties: line[13], oughts: line[18] })
+create (n)-[rel2:has_Candy]->(candyLindt)
+create (candyNestle:Candy {name:"Nestle", seventies: line[4], eighties: line[5], nineties: line[14], oughts: line[19] })
+create (n)-[rel3:has_Candy]->(candyNestle)
+
+return candyNestle

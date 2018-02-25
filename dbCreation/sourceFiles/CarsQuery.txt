@@ -1,0 +1,13 @@
+load csv from "https://expirebox.com/files/acadb1a211d6abd96db5cba2e2bea4d1.csv" as line FIELDTERMINATOR ','
+
+match (n:State { name:line[0]} )
+create (carFord:Cars {name:"Ford", seventies: line[1], eighties: line[6], nineties: line[11], oughts: line[16] })
+create (n)-[rel0:has_Car]->(carFord)
+create (carToyota:Cars {name:"Toyota", seventies: line[2], eighties: line[7], nineties: line[12], oughts: line[17] })
+create (n)-[rel1:has_Car]->(carToyota)
+create (carVW:Cars {name:"Volkswagen", seventies: line[3], eighties: line[8], nineties: line[13], oughts: line[18] })
+create (n)-[rel2:has_Car]->(carVW)
+create (carChrysler:Cars {name:"Chrysler", seventies: line[4], eighties: line[5], nineties: line[14], oughts: line[19] })
+create (n)-[rel3:has_Car]->(carChrysler)
+
+return carChrysler

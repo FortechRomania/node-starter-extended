@@ -1,0 +1,13 @@
+load csv from "https://expirebox.com/files/7a95b72ccc684c9d70d45c33b060b048.csv" as line FIELDTERMINATOR ','
+
+match (n:State { name:line[0]} )
+create (nike:Sportsware {name:"Nike", seventies: line[1], eighties: line[6], nineties: line[11], oughts: line[16] })
+create (n)-[rel0:has_Sportsware]->(nike)
+create (champ:Sportsware {name:"Champion", seventies: line[2], eighties: line[7], nineties: line[12], oughts: line[17] })
+create (n)-[rel1:has_Sportsware]->(champ)
+create (adidas:Sportsware {name:"Adidas", seventies: line[3], eighties: line[8], nineties: line[13], oughts: line[18] })
+create (n)-[rel2:has_Sportsware]->(adidas)
+create (kappa:Sportsware {name:"Kappa", seventies: line[4], eighties: line[5], nineties: line[14], oughts: line[19] })
+create (n)-[rel3:has_Sportsware]->(kappa)
+
+return kappa

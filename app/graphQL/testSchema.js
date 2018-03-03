@@ -1,17 +1,14 @@
+const statesRepo = require( "../repositories/statesRepo" );
+const stateCompanyRepo = require( "../repositories/stateCompanyRepo" );
+
 const {
     GraphQLObjectType,
     GraphQLString,
     // GraphQLInt,
     GraphQLSchema,
-    // GraphQLList,
+    GraphQLList,
     // GraphQLNonNull,
 } = require( "graphql" );
-
-const states = [
-    { id: "1", name: "Alabama" },
-    { id: "2", name: "Colorado" },
-    { id: "3", name: "California" },
-];
 
 // State Type
 const StateType = new GraphQLObjectType( {
@@ -22,22 +19,56 @@ const StateType = new GraphQLObjectType( {
     } ),
 } );
 
+const BasicDataObjectType = new GraphQLObjectType( {
+    name: "BasicDataObject",
+    fields: () => ( {
+        name: { type: GraphQLString },
+        seventies: { type: GraphQLString },
+        eighties: { type: GraphQLString },
+        nineties: { type: GraphQLString },
+        oughts: { type: GraphQLString },
+    } ),
+} );
+
+const StateWithBasicDataType = new GraphQLObjectType( {
+    name: "StateWithBasicData",
+    fields: () => ( {
+        state: { type: StateType },
+        data: { type: new GraphQLList( BasicDataObjectType ) },
+    } ),
+} );
+
 // root query
 const RootQuery = new GraphQLObjectType( {
     name: "RootQueryType",
     fields: () => ( {
+        statesWithData: {
+            type: new GraphQLList( StateWithBasicDataType ),
+            args: {
+                companyType: { type: GraphQLString },
+            },
+            resolve( parentValue, args ) {
+                return stateCompanyRepo.getStateCompanies( args.companyType )
+                    .then( statesWithData => statesWithData );
+            },
+        },
+
         state: {
             type: StateType,
             args: {
                 id: { type: GraphQLString },
             },
-            // eslint-disable-next-line consistent-return
+
             resolve( parentValue, args ) {
-                for ( let i = 0; i < states.length; i += 1 ) {
-                    if ( states[ i ].id === args.id ) {
-                        return states[ i ];
-                    }
-                }
+                return statesRepo.getStateById( args.id )
+                    .then( repoState => repoState );
+            },
+        },
+        states: {
+            type: new GraphQLList( StateType ),
+            resolve( ) {
+                return statesRepo.getAllStates()
+                    .then( repoStates => repoStates );
             },
         },
     } ),

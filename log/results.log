@@ -527,3 +527,5 @@
 {"level":"warn","message":"Warning message","timestamp":"10:53:08 AM"}
 {"level":"info","message":"Info message","timestamp":"10:53:09 AM"}
 {"level":"warn","message":"Warning message","timestamp":"10:53:09 AM"}
+{"level":"info","message":"Info message","timestamp":"12:23:01"}
+{"level":"warn","message":"Warning message","timestamp":"12:23:01"}

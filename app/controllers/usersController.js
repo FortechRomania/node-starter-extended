@@ -30,6 +30,8 @@ const login = ( req, res ) => {
         return res.status( 400 ).send( "password required" );
     }
 
+    console.log( user );
+    console.log( req.body.password );
     const password = bcrypt.compareSync( req.body.password, user.password );
     if ( user ) {
         if ( !password ) {

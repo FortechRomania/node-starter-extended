@@ -1,20 +1,25 @@
-const usersRepository = require( "../repositories/usersRepository" );
+const jwt = require( "jsonwebtoken" );
 
-async function authorize ( req, res, next ) {
-    const { id } = req.body;
+const SECRET = "superSuperSecret";
 
-    if ( !id ) {
-        res.preconditionFailed( "missing_id" );
+function validateToken ( req, res, next ) {
+    const token = req.body.token || req.query.token || req.headers[ "x-access-token" ];
+
+    if ( !token ) {
+        res.unauthorized( );
         return;
     }
 
-    try {
-        const foundUser = await usersRepository.findUser( id );
-        req.user = foundUser;
-        next();
-    } catch ( err ) {
-        res.send( err );
-    }
+    jwt.verify( token, SECRET, ( err, decoded ) => {
+        if ( err ) {
+            return res.json( {
+                success: false,
+                message: "Failed to authenticate token.",
+            } );
+        }
+        req.decoded = decoded;
+        return next( );
+    } );
 }
 
-module.exports = authorize;
+module.exports = validateToken;

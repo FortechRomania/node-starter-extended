@@ -5,7 +5,7 @@ const usersRepository = require( "../repositories/usersRepository" );
 
 const SECRET = "superSuperSecret";
 
-const register = async ( req, res ) => {
+const register = async ( req, res, next ) => {
     const { user } = req;
     if ( user ) {
         res.preconditionFailed( "existing_user" );
@@ -19,7 +19,7 @@ const register = async ( req, res ) => {
             [ "id", "username" ],
         ) );
     } catch ( err ) {
-        res.send( err );
+        next( err );
     }
 };
 
@@ -27,7 +27,7 @@ const login = ( req, res ) => {
     const { user } = req;
 
     if ( !req.body.password ) {
-        return res.status( 400 ).send( "password required" );
+        res.badrequest( "password required" );
     }
 
     const password = bcrypt.compareSync( req.body.password, user.password );
@@ -51,14 +51,14 @@ const login = ( req, res ) => {
     } );
 };
 
-const edit = async ( req, res ) => {
+const edit = async ( req, res, next ) => {
     const { user } = req;
 
     try {
         const editedUser = await usersRepository.editUser( user, req.body );
         res.success( editedUser );
     } catch ( err ) {
-        res.send( err );
+        next( err );
     }
 };
 
@@ -69,7 +69,7 @@ const deleteUser = async ( req, res ) => {
         const deletedUser = await usersRepository.deleteUser( user );
         res.success( deletedUser );
     } catch ( err ) {
-        res.send( err );
+        next( err );
     }
 };
 

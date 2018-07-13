@@ -6,6 +6,13 @@ const customResponses = {
         } );
     },
 
+    badrequest( customError ) {
+        return this.status( 400 ).json( {
+            success: false,
+            error: customError || "bad_request",
+        } );
+    },
+
     unauthorized( ) {
         return this.status( 401 ).json( {
             success: false,

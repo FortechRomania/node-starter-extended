@@ -1,7 +1,6 @@
 const usersController = require( "../controllers/usersController" );
 // add other controllers that are used
 
-const validateToken = require( "../middlewares/validateToken" );
 const authorize = require( "../middlewares/authorize" );
 // add other middlewares that are used
 
@@ -34,7 +33,7 @@ const router = express.Router( );
 *           }
 *      }
 */
-router.post( "/users/registration", authorize, usersController.register );
+router.post( "/users/registration", usersController.register );
 
 /**
 *    @apiGroup User
@@ -49,7 +48,7 @@ router.post( "/users/registration", authorize, usersController.register );
 *           }
 *      }
 */
-router.post( "/users/login", authorize, usersController.login );
+router.post( "/users/login", usersController.login );
 
 /**
 *    @apiGroup User
@@ -60,7 +59,7 @@ router.post( "/users/login", authorize, usersController.login );
 *    @apiParam {Number} age  Mandatory age. Minimum 18.
 *    @apiParam {String} sex  Mandatory sex.
 */
-router.put( "/users/edit", authorize, validateToken, usersController.edit );
+router.put( "/users/edit", authorize, usersController.edit );
 
 /**
 *    @apiGroup User
@@ -71,7 +70,7 @@ router.put( "/users/edit", authorize, validateToken, usersController.edit );
 *           id:123456789
 *       }
 */
-router.delete( "/users/delete", authorize, validateToken, usersController.deleteUser );
+router.delete( "/users/delete", authorize, usersController.deleteUser );
 
 router.get( "/test", ( req, res ) => {
     res.json( { success: true } );

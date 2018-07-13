@@ -5,7 +5,7 @@ const usersRepository = require( "../repositories/usersRepository" );
 
 const SECRET = "superSuperSecret";
 
-const register = ( req, res, next ) => {
+const register = async ( req, res, next ) => {
     const { user } = req;
     if ( user ) {
         res.preconditionFailed( "existing_user" );
@@ -62,7 +62,7 @@ const edit = async ( req, res, next ) => {
     }
 };
 
-const deleteUser = async ( req, res ) => {
+const deleteUser = async ( req, res, next ) => {
     const { user } = req;
 
     try {

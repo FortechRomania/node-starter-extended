@@ -5,7 +5,7 @@ const usersRepository = require( "../repositories/usersRepository" );
 
 const SECRET = "superSuperSecret";
 
-const register = async ( req, res, next ) => {
+const register = ( req, res, next ) => {
     const { user } = req;
     if ( user ) {
         res.preconditionFailed( "existing_user" );
@@ -27,7 +27,7 @@ const login = ( req, res ) => {
     const { user } = req;
 
     if ( !req.body.password ) {
-        res.badrequest( "password required" );
+        res.badRequest( "password required" );
     }
 
     const password = bcrypt.compareSync( req.body.password, user.password );

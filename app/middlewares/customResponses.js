@@ -6,7 +6,7 @@ const customResponses = {
         } );
     },
 
-    badrequest( customError ) {
+    badRequest( customError ) {
         return this.status( 400 ).json( {
             success: false,
             error: customError || "bad_request",

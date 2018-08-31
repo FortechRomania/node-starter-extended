@@ -5,14 +5,13 @@ const helmet = require( "helmet" );
 const config = require( "./config" );
 const customResponses = require( "./middlewares/customResponses" );
 
-const app = express();
+const app = express( );
 const port = process.env.PORT || config.port;
 const ENV = process.env.NODE_ENV || config.env;
 
 app.set( "env", ENV );
 
 require( "./models/user" );
-require( "./models/character" );
 // add all models that are used in the app. Use require as below:
 // require( path to model )
 
@@ -22,7 +21,7 @@ app.use( ( req, res, next ) => {
     next();
 } );
 
-app.use( bodyParser.json() );
+app.use( bodyParser.json( ) );
 app.use( customResponses );
 app.use( helmet() );
 
@@ -30,7 +29,7 @@ require( "./config/mongoose" )( app );
 require( "./config/routes" )( app );
 
 app.use( ( req, res ) => {
-    res.notFound();
+    res.notFound( );
 } );
 
 app.use( ( err, req, res, next ) => {
@@ -39,8 +38,7 @@ app.use( ( err, req, res, next ) => {
 } );
 
 // Don't remove next !!!!
-app.use( ( err, req, res, next ) => {
-    // eslint-disable-line no-unused-vars
+app.use( ( err, req, res, next ) => { // eslint-disable-line no-unused-vars
     res.status( 503 ).json( {
         success: false,
         error: "server_error",

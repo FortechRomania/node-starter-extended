@@ -1,7 +1,0 @@
-const characters = {
-    
-}
-
-function addCharacter( ) {
-
-}

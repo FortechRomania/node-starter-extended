@@ -15,26 +15,29 @@ const register = async ( req, res, next ) => {
     }
     try {
         const savedUser = await usersRepository.saveUser( req.body );
-
-        res.success( extractObject(
-            savedUser,
-            [ "id", "username" ],
-        ) );
+        req.userData = {
+            userId: savedUser._id,
+            type: req.body.type,
+            username: savedUser.username,
+            playerName: req.body.playerName,
+        };
+        next();
     } catch ( err ) {
         next( err );
     }
 };
 
-const login = async ( req, res ) => {
-    const { username } = req;
+const login = async ( req, res, next ) => {
+    const { username } = req.body;
 
     if ( !req.body.password ) {
         res.badRequest( "password required" );
     }
 
     const user = await usersRepository.findByUsername( username );
-
+    console.log( "user", user );
     if ( user ) {
+        console.log( "1" );
         const password = bcrypt.compareSync( req.body.password, user.password );
         if ( !password ) {
             return res.json( {
@@ -44,15 +47,18 @@ const login = async ( req, res ) => {
         }
 
         const token = jwt.sign( user.toObject(), SECRET, { expiresIn: 1440 } );
-        return res.json( {
-            success: true,
+        req.userData = {
             token,
+            username: user.username,
+            userId: user._id,
+        };
+        next();
+    } else {
+        return res.json( {
+            success: false,
+            message: "-->",
         } );
     }
-    return res.json( {
-        success: false,
-        message: "Authentication failed. User not found.",
-    } );
 };
 
 const edit = async ( req, res, next ) => {
@@ -61,6 +67,15 @@ const edit = async ( req, res, next ) => {
     try {
         const editedUser = await usersRepository.editUser( user, req.body );
         res.success( editedUser );
+    } catch ( err ) {
+        next( err );
+    }
+};
+
+const allUsers = async ( req, res, next ) => {
+    try {
+        const users = await usersRepository.allUsers();
+        res.success( users );
     } catch ( err ) {
         next( err );
     }
@@ -78,6 +93,7 @@ const deleteUser = async ( req, res, next ) => {
 };
 
 module.exports = {
+    allUsers,
     register,
     login,
     edit,

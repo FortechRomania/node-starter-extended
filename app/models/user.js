@@ -3,18 +3,18 @@ const mongoose = require( "mongoose" );
 
 const { Schema } = mongoose;
 
-const userSchema = new Schema( {
-    id: { type: String, required: true },
-    username: { type: String, required: true },
-    password: { type: String, required: true },
-    name: { type: String, required: true },
-    age: { type: Number, required: true, min: 18 },
-    sex: { type: String, required: true, enum: [ "male", "female" ] },
-}, {
-    timestamps: true,
-} );
+const userSchema = new Schema(
+    {
+        username: { type: String, required: true },
+        password: { type: String, required: true },
+    },
+    {
+        timestamps: true,
+    },
+);
 
-userSchema.methods.setPass = function( password ) { // eslint-disable-line
+userSchema.methods.setPass = function( password ) {
+    // eslint-disable-line
     const saltRounds = 10;
     const hash = bcrypt.hashSync( password, saltRounds );
     this.password = hash;

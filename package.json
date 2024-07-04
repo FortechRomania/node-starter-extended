@@ -24,10 +24,10 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
-    "express-jwt": "^5.3.1",
+    "express-jwt": "^7.0.0",
     "jsonwebtoken": "^8.3.0",
     "mongodb": "^2.2.10",
-    "mongoose": "^4.6.1",
+    "mongoose": "^5.7.3",
     "nodemon": "^1.18.1",
     "save": "^2.3.0",
     "winston": "^2.4.0"
